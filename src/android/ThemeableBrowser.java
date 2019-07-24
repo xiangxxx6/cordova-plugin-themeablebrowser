@@ -6,9 +6,7 @@
        to you under the Apache License, Version 2.0 (the
        "License"); you may not use this file except in compliance
        with the License.  You may obtain a copy of the License at
-
          http://www.apache.org/licenses/LICENSE-2.0
-
        Unless required by applicable law or agreed to in writing,
        software distributed under the License is distributed on an
        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -61,6 +59,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.graphics.Color;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;
@@ -85,7 +84,7 @@ public class ThemeableBrowser extends CordovaPlugin {
     protected static final String LOG_TAG = "ThemeableBrowser";
     private static final String SELF = "_self";
     private static final String SYSTEM = "_system";
-    // private static final String BLANK = "_blank";
+    private static final String BLANK = "_blank";
     private static final String EXIT_EVENT = "exit";
     private static final String LOAD_START_EVENT = "loadstart";
     private static final String LOAD_STOP_EVENT = "loadstop";
@@ -534,6 +533,8 @@ public class ThemeableBrowser extends CordovaPlugin {
                 dialog = new ThemeableBrowserDialog(cordova.getActivity(),
                         android.R.style.Theme_Black_NoTitleBar,
                         features.hardwareback);
+                
+                // 新增 end
                 if (!features.disableAnimation) {
                     dialog.getWindow().getAttributes().windowAnimations
                             = android.R.style.Animation_Dialog;
@@ -555,6 +556,7 @@ public class ThemeableBrowser extends CordovaPlugin {
                 // Toolbar layout
                 Toolbar toolbarDef = features.toolbar;
                 FrameLayout toolbar = new FrameLayout(cordova.getActivity());
+                toolbar.setPadding(0, dpToPixels(20), 0, 0);
                 toolbar.setBackgroundColor(hexStringToColor(
                         toolbarDef != null && toolbarDef.color != null
                                 ? toolbarDef.color : "#ffffffff"));
@@ -740,6 +742,7 @@ public class ThemeableBrowser extends CordovaPlugin {
                     title.setSingleLine();
                     title.setEllipsize(TextUtils.TruncateAt.END);
                     title.setGravity(Gravity.CENTER);
+                    title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20); 
                     title.setTextColor(hexStringToColor(
                             features.title.color != null
                                     ? features.title.color : "#000000ff"));
